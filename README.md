@@ -24,6 +24,7 @@ Before the XP Framework was completely migrated to PHP namespaces, classes where
     // ...
   }
 ?>
+```
 
 Notes:
 
