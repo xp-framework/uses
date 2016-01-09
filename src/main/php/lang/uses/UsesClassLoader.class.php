@@ -119,7 +119,10 @@ class UsesClassLoader extends \lang\Object implements \lang\IClassLoader {
    * @throws lang.ClassLoadingException
    */
   public function loadClass0($class) {
-    if (isset(\xp::$cl[$class])) return literal($class);
+    if (isset(\xp::$cl[$class])) {
+      unset($this->location[$class]);
+      return literal($class);
+    }
 
     if (null === ($loader= $this->locate($class))) {
       unset($this->location[$class]);
