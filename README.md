@@ -14,6 +14,11 @@ Backward compatibility for loading classes with `uses()` with XP 6.4.0+
 
 Motivation
 ----------
+**In [XP 6.4.0](https://github.com/xp-framework/core/releases/tag/v6.4.0), support for loading classes via `uses()` was dropped as part of the framework's path to PHP 7.0.** Unfortunately, not everyone may be able to adapt their entire codebase in a timely manner. However, they still might want to be able to use newer versions of the framework, which include bugfixes they might need. *This library can help during this transient state.*
+
+
+Background
+----------
 Before the XP Framework was completely migrated to PHP namespaces, classes where declared as follows:
 
 ```php
@@ -32,15 +37,13 @@ Notes:
 * The `Object` can be referred to by its short name. This is because it belongs to a list of omnipresent classes.
 * The `Filter` interface can be referred to by its short name. This is because it was loaded explicitely above, and happens regardless of whether it is declared namespaced or not.
 
-**In [XP 6.4.0](https://github.com/xp-framework/core/releases/tag/v6.4.0), support for loading classes via `uses()` was dropped as part of the framework's path to PHP 7.0.** Not everyone may be able to adapt their codebase in a timely manner. However, they still might want to be able to use newer versions of the framework, which include bugfixes.
-
 
 What this library does
 ----------------------
 This library:
 
-* Adds a `uses()` function.
-* Injects a class loader in the class loading chain which adds support for the legacy class declaration.
+* Adds a `uses()` function
+* Injects a class loader in the class loading chain which adds support for legacy class declarations
 
 If successfully installed, you will see the `UsesCL` line appear:
 
