@@ -10,6 +10,8 @@ use lang\reflect\TargetInvocationException;
 
 /**
  * Intercept regular class loading
+ *
+ * @test  xp://lang.uses.unittest.UsesClassLoaderTest
  */
 class UsesClassLoader extends \lang\Object implements \lang\IClassLoader {
   private $location= [];
@@ -50,6 +52,11 @@ class UsesClassLoader extends \lang\Object implements \lang\IClassLoader {
    * @return bool
    */
   public function providesUri($uri) {
+    foreach (ClassLoader::getLoaders() as $loader) {
+      if ($loader !== $this && $loader->providesUri($uri)) {
+        return true;
+      }
+    }
     return false;
   }
 
