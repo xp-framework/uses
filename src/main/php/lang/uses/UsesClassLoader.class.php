@@ -6,7 +6,6 @@ use lang\ClassNotFoundException;
 use lang\ClassFormatException;
 use lang\ClassLinkageException;
 use lang\ClassDependencyException;
-use lang\reflect\TargetInvocationException;
 
 /**
  * Intercept regular class loading
@@ -134,7 +133,7 @@ class UsesClassLoader extends \lang\Object implements \lang\IClassLoader {
     \xp::$cll++;
     try {
       $r= include(typeof($loader)->getMethod('classUri')->setAccessible(true)->invoke($loader, [$class]));
-    } catch (TargetInvocationException $e) {
+    } catch (ClassLoadingException $e) {
       unset(\xp::$cl[$class]);
       unset($this->location[$class]);
       \xp::$cll--;
@@ -150,13 +149,13 @@ class UsesClassLoader extends \lang\Object implements \lang\IClassLoader {
       // a "soft" dependency, one that is only required at runtime, was
       // not loaded, the class itself has been declared.
       if (self::exists($decl)) {
-        throw new ClassDependencyException($class, [$loader], $e->getCause());
+        throw new ClassDependencyException($class, [$loader], $e);
       }
 
       // If otherwise, a "hard" dependency could not be loaded, eg. the
       // base class or a required interface and thus the class could not
       // be declared.
-      throw new ClassLinkageException($class, [$loader], $e->getCause());
+      throw new ClassLinkageException($class, [$loader], $e);
     }
 
     unset($this->location[$class]);
