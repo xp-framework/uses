@@ -142,7 +142,7 @@ class UsesClassLoader extends \lang\Object implements \lang\IClassLoader {
       if (null === $package) {
         $decl= substr($class, (false === ($p= strrpos($class, '.')) ? 0 : $p + 1));
       } else {
-        $decl= strtr($class, '.', '·');
+        $decl= strtr($class, '.', "\xb7");
       }
 
       // If class was declared, but loading threw an exception it means
@@ -173,7 +173,7 @@ class UsesClassLoader extends \lang\Object implements \lang\IClassLoader {
       $name= $class;
       \xp::$sn[$class]= $name;
     } else if (null !== $package) {
-      $name= strtr($class, '.', '·');
+      $name= strtr($class, '.', "\xb7");
       class_alias($name, strtr($class, '.', '\\'));
       \xp::$sn[$class]= $name;
     } else if (($ns= strtr($class, '.', '\\')) && self::exists($ns)) {

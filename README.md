@@ -42,8 +42,8 @@ What this library does
 ----------------------
 This library:
 
-* Adds a `uses()` function
-* Injects a class loader in the class loading chain which adds support for legacy class declarations
+* **Adds a `uses()` function**. It takes care of loading classes, creating short name aliases for namespaced classes and handling imports.
+* **Injects a class loader** in the class loading chain which adds support for legacy class declarations. It ensures class name / literal mappings are correctly registered.
 
 If successfully installed, you will see the `UsesCL` line appear:
 
