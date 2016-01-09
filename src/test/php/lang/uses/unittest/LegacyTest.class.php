@@ -20,17 +20,29 @@ class LegacyTest extends \unittest\TestCase {
   public function load_legacy_class_via_uses() {
     uses('lang.uses.unittest.ViaUses');
 
-    $this->assertTrue(class_exists('ViaUses', false), 'Imported as global class');
+    $literal= 'ViaUses';
+    $this->assertTrue(class_exists($literal, false), 'Imported as global class');
     $this->assertTrue(class_exists('lang\\uses\\unittest\\ViaUses', false), 'Aliased to namespace');
-    $this->assertEquals('lang.uses.unittest.ViaUses', typeof(new ViaUses())->getName(), 'Retains name');
+    $this->assertEquals('lang.uses.unittest.ViaUses', typeof(new $literal())->getName(), 'Retains name');
   }
 
   #[@test]
   public function load_legacy_class_via_import() {
     spl_autoload_call(ViaImport::class);
 
-    $this->assertTrue(class_exists('ViaImport', false), 'Imported as global class');
+    $literal= 'ViaImport';
+    $this->assertTrue(class_exists($literal, false), 'Imported as global class');
     $this->assertTrue(class_exists('lang\\uses\\unittest\\ViaImport', false), 'Aliased to namespace');
-    $this->assertEquals('lang.uses.unittest.ViaImport', typeof(new ViaImport())->getName(), 'Retains name');
+    $this->assertEquals('lang.uses.unittest.ViaImport', typeof(new $literal())->getName(), 'Retains name');
+  }
+
+  #[@test]
+  public function load_qualified_legacy_class() {
+    uses('lang.uses.unittest.Qualified');
+
+    $literal= "lang\xb7uses\xb7unittest\xb7Qualified";
+    $this->assertTrue(class_exists($literal, false), 'Imported as qualified class');
+    $this->assertTrue(class_exists('lang\\uses\\unittest\\Qualified', false), 'Aliased to namespace');
+    $this->assertEquals('lang.uses.unittest.Qualified', typeof(new $literal())->getName(), 'Retains name');
   }
 }
